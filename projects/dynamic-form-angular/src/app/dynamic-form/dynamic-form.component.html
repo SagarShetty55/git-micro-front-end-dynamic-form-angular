@@ -1,0 +1,30 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  @for (field of formDefinition; track field.name) {
+    @if (shouldDisplayField(field)) {
+      <div class="customField">
+        <label>{{ field.name }}
+          @if (field?.validator?.includes('required')) {
+            <span>*</span>
+          }
+        </label>
+        @if (field.fieldtype === 'text') {
+          <input [formControlName]="field.name" type="text" />
+        }
+        @if (field.fieldtype === 'date') {
+          <input [formControlName]="field.name" type="date"/>
+        }
+        @if (field.fieldtype === 'integer') {
+          <input [formControlName]="field.name" type="number" />
+        }
+        @if (field.fieldtype === 'boolean') {
+          <select [formControlName]="field.name">
+            @for (option of field.selectList; track option) {
+              <option [value]="option">{{ option }}</option>
+            }
+          </select>
+        }
+      </div>
+    }
+  }
+  <button type="submit">Save</button>
+</form>
