@@ -1,0 +1,109 @@
+{
+	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+	"version": 1,
+	"newProjectRoot": "projects",
+	"projects": {
+		"dynamicFormAngular": {
+			"projectType": "application",
+			"schematics": {},
+			"root": "projects/dynamic-form-angular",
+			"sourceRoot": "projects/dynamic-form-angular/src",
+			"prefix": "app",
+			"architect": {
+				"build": {
+					"builder": "ngx-build-plus:browser",
+					"options": {
+						"outputPath": "dist/dynamic-form-angular",
+						"index": "projects/dynamic-form-angular/src/index.html",
+						"polyfills": [
+							"zone.js"
+						],
+						"tsConfig": "projects/dynamic-form-angular/tsconfig.app.json",
+						"assets": [
+							{
+								"glob": "**/*",
+								"input": "projects/dynamic-form-angular/public",
+								"output": "."
+							}
+						],
+						"styles": [
+							"projects/dynamic-form-angular/src/styles.css"
+						],
+						"scripts": [],
+						"main": "projects/dynamic-form-angular/src/main.ts",
+						"extraWebpackConfig": "projects/dynamic-form-angular/webpack.config.js",
+						"commonChunk": false
+					},
+					"configurations": {
+						"production": {
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "500kB",
+									"maximumError": "1MB"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "4kB",
+									"maximumError": "8kB"
+								}
+							],
+							"outputHashing": "all",
+							"extraWebpackConfig": "projects/dynamic-form-angular/webpack.prod.config.js"
+						},
+						"development": {
+							"optimization": false,
+							"extractLicenses": false,
+							"sourceMap": true
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"serve": {
+					"builder": "ngx-build-plus:dev-server",
+					"configurations": {
+						"production": {
+							"buildTarget": "dynamicFormAngular:build:production",
+							"extraWebpackConfig": "projects/dynamic-form-angular/webpack.prod.config.js"
+						},
+						"development": {
+							"buildTarget": "dynamicFormAngular:build:development"
+						}
+					},
+					"defaultConfiguration": "development",
+					"options": {
+						"port": 4200,
+						"publicHost": "http://localhost:4200",
+						"extraWebpackConfig": "projects/dynamic-form-angular/webpack.config.js"
+					}
+				},
+				"extract-i18n": {
+					"builder": "@angular-devkit/build-angular:extract-i18n"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"polyfills": [
+							"zone.js",
+							"zone.js/testing"
+						],
+						"tsConfig": "projects/dynamic-form-angular/tsconfig.spec.json",
+						"assets": [
+							{
+								"glob": "**/*",
+								"input": "projects/dynamic-form-angular/public"
+							}
+						],
+						"styles": [
+							"projects/dynamic-form-angular/src/styles.css"
+						],
+						"scripts": []
+					}
+				}
+			}
+		}
+	},
+	"cli": {
+		"analytics": "eeb02645-029d-43a0-add1-4aa5db5978e1"
+	}
+}
